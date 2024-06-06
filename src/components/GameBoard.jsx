@@ -6,15 +6,17 @@ const initialGameBoard = [ // The game board is represented as a list whose elem
   [null, null, null], // row
 ];
 
-export default function GameBoard(){
+export default function GameBoard({ activePlayerSymbol, onSelectSquare }){
   const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
   function handleSelectSquare(rowIndex, colIndex){
     setGameBoard((previousGameBoard) => {
       const updatedGameBoard = [...previousGameBoard.map(innerArray => [...innerArray])]; // Creating a deep copy of the previous game board.
-      updatedGameBoard[rowIndex][colIndex] = 'X';
+      updatedGameBoard[rowIndex][colIndex] = activePlayerSymbol;
       return updatedGameBoard;
     });
+
+    onSelectSquare();
   }
 
   return (
