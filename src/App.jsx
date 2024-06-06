@@ -4,18 +4,27 @@ import GameBoard from "./components/GameBoard";
 import Log from "./components/Log";
 import Player from "./components/Player";
 
+
+function deriveActivePlayer(gameTurns){
+  let currentPlayer = "X"; // We assume that we are in an odd turn.
+  if(gameTurns.length > 0 && gameTurns[0].player == "X"){ // Make a check to see if its necessary to change the value of "currentPlayer".
+    currentPlayer = "O";
+  }
+
+    return currentPlayer;
+}
+
+
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
-  const [activePlayer, setActivePlayer] = useState("X");
+  // const [activePlayer, setActivePlayer] = useState("X");
+
+  const activePlayer = deriveActivePlayer(gameTurns);
 
   function handleSelectSquare(rowIndex, colIndex){
-    setActivePlayer((currentActivePlayer) => currentActivePlayer === "X" ? "O" : "X");
+    // setActivePlayer((currentActivePlayer) => currentActivePlayer === "X" ? "O" : "X");
     setGameTurns((prevTurns) => {
-      let currentPlayer = "X"; // We assume that we are in an odd turn.
-
-      if(prevTurns.length > 0 && prevTurns[0].player === "X"){ // Make a check to see if its necessary to change the value of "currentPlayer".
-        currentPlayer = "O";
-      }
+      const currentPlayer = deriveActivePlayer(prevTurns);
 
       const updatedTurns = [
         {
